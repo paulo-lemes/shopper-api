@@ -5,7 +5,7 @@ import { ClientError } from "../errors/client-error";
 import { analyzeImageMeasurement } from "../lib/googleapi";
 import { prisma } from "../lib/prisma";
 
-export async function uploadImage(app: FastifyInstance) {
+export async function upload(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/upload",
     {
