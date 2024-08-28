@@ -42,6 +42,7 @@ export async function confirm(app: FastifyInstance) {
         where: { measure_uuid },
         data: {
           measure_value: confirmed_value,
+          has_confirmed: true,
         },
       });
 
