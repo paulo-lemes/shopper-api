@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -23,7 +24,9 @@ export async function list(app: FastifyInstance) {
       const { costumer_code } = request.params;
       const { measure_type } = request.query;
 
-      let measures;
+      const filterMeasures: Prisma.MeasureWhereInput = {
+        customer_code: costumer_code,
+      };
 
       if (measure_type) {
         if (!measureTypes.includes(measure_type)) {
@@ -32,34 +35,19 @@ export async function list(app: FastifyInstance) {
           error.message = "Tipo de medição não permitida";
           throw error;
         }
-
-        measures = await prisma.measure.findMany({
-          where: {
-            customer_code: costumer_code,
-            measure_type: measure_type,
-          },
-          select: {
-            measure_uuid: true,
-            measure_datetime: true,
-            measure_type: true,
-            has_confirmed: true,
-            image_url: true,
-          },
-        });
-      } else {
-        measures = await prisma.measure.findMany({
-          where: {
-            customer_code: costumer_code,
-          },
-          select: {
-            measure_uuid: true,
-            measure_datetime: true,
-            measure_type: true,
-            has_confirmed: true,
-            image_url: true,
-          },
-        });
+        filterMeasures.measure_type = measure_type;
       }
+
+      const measures = await prisma.measure.findMany({
+        where: filterMeasures,
+        select: {
+          measure_uuid: true,
+          measure_datetime: true,
+          measure_type: true,
+          has_confirmed: true,
+          image_url: true,
+        },
+      });
 
       if (!measures.length) {
         const error = new ClientError();
