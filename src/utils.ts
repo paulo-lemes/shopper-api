@@ -21,3 +21,14 @@ export async function saveImage(base64: string) {
 
   return { filePath, type: type.mime, fileName };
 }
+
+export function extractIntegerNumber(phrase: string) {
+  const resultado = phrase.match(/\d+(\.\d+)?/);
+
+  if (resultado) {
+    const numeroDecimal = parseFloat(resultado[0]);
+    return Math.floor(numeroDecimal);
+  }
+
+  throw new Error("Number not found");
+}

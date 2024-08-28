@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ClientError } from "../errors/client-error";
 import { analyzeImageMeasurement } from "../lib/googleapi";
 import { prisma } from "../lib/prisma";
+import { extractIntegerNumber } from "../utils";
 
 export async function upload(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -40,7 +41,7 @@ export async function upload(app: FastifyInstance) {
       }
 
       const geminiAnalysis = await analyzeImageMeasurement(image);
-      const measure_value = parseInt(geminiAnalysis.measureValue);
+      const measure_value = extractIntegerNumber(geminiAnalysis.promptResponse);
       const image_url = geminiAnalysis.imageUrl;
 
       const newMeasure = await prisma.measure.create({
