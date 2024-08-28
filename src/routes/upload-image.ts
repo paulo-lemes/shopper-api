@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { ClientError } from "../errors/client-error";
-import { analyzeImageMeasurement } from "../lib/gemini";
+import { analyzeImageMeasurement } from "../lib/googleapi";
 import { prisma } from "../lib/prisma";
 
 export async function uploadImage(app: FastifyInstance) {
@@ -12,7 +12,7 @@ export async function uploadImage(app: FastifyInstance) {
       schema: {
         body: z.object({
           image: z.string().base64(),
-          customer_code: z.string(),
+          customer_code: z.string().min(1),
           measure_datetime: z.string().datetime(),
           measure_type: z.enum(["WATER", "GAS"]),
         }),
@@ -40,9 +40,8 @@ export async function uploadImage(app: FastifyInstance) {
       }
 
       const geminiAnalysis = await analyzeImageMeasurement(image);
-      const measure_value = parseInt(geminiAnalysis);
-      
-      const image_url = "test";
+      const measure_value = parseInt(geminiAnalysis.measureValue);
+      const image_url = geminiAnalysis.imageUrl;
 
       const newMeasure = await prisma.measure.create({
         data: {
