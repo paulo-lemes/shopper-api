@@ -7,7 +7,7 @@ const fileManager = new GoogleAIFileManager(env.GEMINI_API_KEY);
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-pro",
+  model: "gemini-1.5-flash",
 });
 
 interface UploadImageParams {
@@ -45,9 +45,9 @@ export async function analyzeImageMeasurement(base64Image: string) {
       },
     ]);
 
-    const measureValue = result.response.text();
-    console.log("Measure value:", measureValue);
-    return { measureValue, imageUrl: responseUploadedImage.file.uri };
+    const promptResponse = result.response.text();
+    console.log("Prompt response:", promptResponse);
+    return { promptResponse, imageUrl: responseUploadedImage.file.uri };
   } catch (error) {
     console.error("Error analyzing image:", error);
     throw new Error(`Error analyzing image: ${error}`);
