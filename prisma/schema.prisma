@@ -9,7 +9,7 @@ generator client {
 
 model Measure {
   measure_uuid       String      @id @default(uuid())
-  image              String
+  image_url          String
   customer_code      String
   measure_datetime   DateTime
   measure_type       String
