@@ -24,6 +24,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await prisma.measure.deleteMany();
   await app.close();
 });
 
