@@ -1,6 +1,9 @@
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
-  testMatch: ["**/*.test.ts"],
-  moduleFileExtensions: ["ts", "js", "json", "node"],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
+  transform: {
+    ".*\\.(j|t)sx?$": ["@swc/jest"],
+  },
+  transformIgnorePatterns: [],
+  extensionsToTreatAsEsm: [".ts"],
+  setupFiles: ["dotenv/config"],
 };
