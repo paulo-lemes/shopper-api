@@ -6,7 +6,7 @@ import { analyzeImageMeasurement } from "../lib/googleapi";
 import { prisma } from "../lib/prisma";
 import { extractIntegerNumber } from "../utils";
 
-export async function upload(app: FastifyInstance) {
+export async function postUpload(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/upload",
     {

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { ClientError } from "../errors/client-error";
 import { prisma } from "../lib/prisma";
 
-export async function confirm(app: FastifyInstance) {
+export async function patchConfirm(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().patch(
     "/confirm",
     {

@@ -5,9 +5,9 @@ import {
 } from "fastify-type-provider-zod";
 import { env } from "./env";
 import { errorHandler } from "./error-handler";
-import { confirm } from "./routes/confirm";
-import { list } from "./routes/list";
-import { upload } from "./routes/upload";
+import { getList } from "./routes/get-list";
+import { patchConfirm } from "./routes/patch-confirm";
+import { postUpload } from "./routes/post-upload";
 
 const app = fastify();
 
@@ -15,9 +15,9 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 app.setErrorHandler(errorHandler);
 
-app.register(upload);
-app.register(confirm);
-app.register(list);
+app.register(postUpload);
+app.register(patchConfirm);
+app.register(getList);
 
 app.listen({ port: env.PORT }).then(() => {
   console.log("Server running!");

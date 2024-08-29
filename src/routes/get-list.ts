@@ -7,7 +7,7 @@ import { prisma } from "../lib/prisma";
 
 const measureTypes = ["WATER", "GAS"];
 
-export async function list(app: FastifyInstance) {
+export async function getList(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     "/:costumer_code/list",
     {
