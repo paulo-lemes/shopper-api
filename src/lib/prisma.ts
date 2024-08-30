@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { env } from "../env";
+import { env } from "../env.ts";
 
 export const prisma = new PrismaClient({
   log: ["query"],

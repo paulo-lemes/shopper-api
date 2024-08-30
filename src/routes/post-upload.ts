@@ -1,10 +1,10 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { ClientError } from "../errors/client-error";
-import { analyzeImageMeasurement } from "../lib/googleapi";
-import { prisma } from "../lib/prisma";
-import { extractIntegerNumber } from "../utils";
+import { ClientError } from "../errors/client-error.ts";
+import { analyzeImageMeasurement } from "../lib/googleapi.ts";
+import { prisma } from "../lib/prisma.ts";
+import { extractIntegerNumber } from "../utils.ts";
 
 export async function postUpload(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
