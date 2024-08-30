@@ -7,6 +7,7 @@ import {
 import { errorHandler } from "../../src/error-handler";
 import { prisma } from "../../src/lib/prisma";
 import { postUpload } from "../../src/routes/post-upload";
+import base64 from "../data.json";
 
 let app: ReturnType<typeof fastify>;
 
@@ -28,6 +29,25 @@ afterAll(async () => {
 });
 
 describe("POST /upload", () => {
+  it("should create measure", async () => {
+    const response = await app.inject({
+      method: "POST",
+      url: "/upload",
+      payload: {
+        image: base64.string,
+        customer_code: "1234",
+        measure_datetime: new Date().toISOString(),
+        measure_type: "WATER",
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+    const payload = JSON.parse(response.payload);
+    expect(payload).toHaveProperty("image_url");
+    expect(payload).toHaveProperty("measure_value", 2266);
+    expect(payload).toHaveProperty("measure_uuid");
+  });
+
   it("shouldn't create measure with missing body property", async () => {
     const response = await app.inject({
       method: "POST",
