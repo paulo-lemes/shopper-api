@@ -1,5 +1,5 @@
 import fs from "fs";
-import imageType from "image-type";
+import sizeOf from "image-size";
 import path from "path";
 import { promisify } from "util";
 
@@ -20,7 +20,7 @@ export async function saveImage(base64: string) {
   }
 
   const buffer = Buffer.from(base64, "base64");
-  const type = await imageType(buffer);
+  const type = sizeOf(buffer).type === "jpg" ? "jpeg" : sizeOf(buffer).type;
 
   if (!type) throw new Error("Unidentified image type");
 
@@ -29,7 +29,7 @@ export async function saveImage(base64: string) {
 
   await writeFile(filePath, buffer);
 
-  return { filePath, type: type.mime, fileName };
+  return { filePath, type: "image/" + type, fileName };
 }
 
 export function extractIntegerNumber(phrase: string) {
