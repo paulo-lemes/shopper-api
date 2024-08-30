@@ -39,11 +39,14 @@ git clone https://github.com/paulo-lemes/shopper-api.git
 
 4. Crie um arquivo .env contendo as variáveis de ambiente:
 
-  DATABASE_URL="postgresql://<user>:<password>@localhost:5432/<nome_db>"
-  GEMINI_API_KEY=<chave_api>
+  - GEMINI_API_KEY="<chave_api>"
+  - DATABASE_URL="postgresql://<user>:<password>@localhost:5432/<nome_db>"
+  - POSTGRES_USER="<user>"
+  - POSTGRES_PASSWORD="<password>"
+  - POSTGRES_DB="<nome_db>"
 
   Para testes, adicionar também:
-  TEST_DATABASE_URL="postgresql://<user>:<password>@localhost:5432/<test_nome_db>"
+  - TEST_DATABASE_URL="postgresql://<user>:<password>@localhost:5432/<test_nome_db>"
 
 5. Após a instalação, inicie o servidor de desenvolvimento executando:
 
@@ -66,7 +69,15 @@ Para realizar o comando de testes, execute:
 
 2. Faça o download do arquivo "docker-compose.yml".
 
-3. Abra o terminal no diretório em que se encontra o arquivo docker-compose.yml e execute o seguinte comando:
+3. Crie um arquivo .env contendo as variáveis de ambiente:
+
+  - GEMINI_API_KEY="<chave_api>"
+  - DATABASE_URL="postgresql://<user>:<password>@localhost:5432/<nome_db>"
+  - POSTGRES_USER="<user>"
+  - POSTGRES_PASSWORD="<password>"
+  - POSTGRES_DB="<nome_db>"
+
+4. Abra o terminal no diretório em que se encontra o arquivo docker-compose.yml e execute o seguinte comando:
 
    ```bash
    docker compose up -d

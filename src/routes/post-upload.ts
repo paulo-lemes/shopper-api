@@ -1,10 +1,10 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { ClientError } from "../errors/client-error.ts";
-import { analyzeImageMeasurement } from "../lib/googleapi.ts";
-import { prisma } from "../lib/prisma.ts";
-import { extractIntegerNumber } from "../utils.ts";
+import { ClientError } from "../errors/client-error";
+import { analyzeImageMeasurement } from "../lib/googleapi";
+import { prisma } from "../lib/prisma";
+import { extractIntegerNumber } from "../utils";
 
 export async function postUpload(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -23,17 +23,21 @@ export async function postUpload(app: FastifyInstance) {
       const { image, customer_code, measure_datetime, measure_type } =
         request.body;
 
-      const existingMeasure = await prisma.measure.findFirst({
+      const existingMeasures = await prisma.measure.findMany({
         where: {
           customer_code,
           measure_type,
         },
       });
 
-      if (
-        existingMeasure?.measure_datetime.getMonth() ===
-        new Date(measure_datetime).getMonth()
-      ) {
+      const targetMonth = new Date(measure_datetime).getMonth();
+
+      const hasMatchingMonth = existingMeasures.some(
+        (measure) =>
+          new Date(measure.measure_datetime).getMonth() === targetMonth
+      );
+
+      if (hasMatchingMonth) {
         const error = new ClientError();
         error.name = "DOUBLE_REPORT";
         error.message = "Leitura do mês já realizada";

@@ -1,18 +1,16 @@
 import fs from "fs";
 import imageType from "image-type";
 import path from "path";
-import { fileURLToPath } from "url";
 import { promisify } from "util";
 
 const writeFile = promisify(fs.writeFile);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 function getImageDir() {
+  const dirname = process.env.APP_DIRNAME || __dirname;
+
   return process.env.NODE_ENV === "test"
-    ? path.join(__dirname, "test-images")
-    : path.join(__dirname, "images");
+    ? path.join(dirname, "test-images")
+    : path.join(dirname, "images");
 }
 
 export async function saveImage(base64: string) {

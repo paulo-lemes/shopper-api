@@ -2,8 +2,8 @@ import { Prisma } from "@prisma/client";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { ClientError } from "../errors/client-error.ts";
-import { prisma } from "../lib/prisma.ts";
+import { ClientError } from "../errors/client-error";
+import { prisma } from "../lib/prisma";
 
 const measureTypes = ["WATER", "GAS"];
 

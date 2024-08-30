@@ -3,11 +3,11 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { env } from "./env.ts";
-import { errorHandler } from "./error-handler.ts";
-import { getList } from "./routes/get-list.ts";
-import { patchConfirm } from "./routes/patch-confirm.ts";
-import { postUpload } from "./routes/post-upload.ts";
+import { env } from "./env";
+import { errorHandler } from "./error-handler";
+import { getList } from "./routes/get-list";
+import { patchConfirm } from "./routes/patch-confirm";
+import { postUpload } from "./routes/post-upload";
 
 const app = fastify();
 
