@@ -1,10 +1,22 @@
 import fs from "fs";
-import { writeFile } from "fs/promises";
 import imageType from "image-type";
 import path from "path";
+import { fileURLToPath } from "url";
+import { promisify } from "util";
+
+const writeFile = promisify(fs.writeFile);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+function getImageDir() {
+  return process.env.NODE_ENV === "test"
+    ? path.join(__dirname, "test-images")
+    : path.join(__dirname, "images");
+}
 
 export async function saveImage(base64: string) {
-  const tempDir = path.join(__dirname, "images");
+  const tempDir = getImageDir();
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir);
   }
@@ -23,11 +35,11 @@ export async function saveImage(base64: string) {
 }
 
 export function extractIntegerNumber(phrase: string) {
-  const resultado = phrase.match(/\d+(\.\d+)?/);
+  const result = phrase.match(/\d+(\.\d+)?/);
 
-  if (resultado) {
-    const numeroDecimal = parseFloat(resultado[0]);
-    return Math.floor(numeroDecimal);
+  if (result) {
+    const floatNumber = parseFloat(result[0]);
+    return Math.floor(floatNumber);
   }
 
   throw new Error("Number not found");

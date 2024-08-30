@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleAIFileManager } from "@google/generative-ai/server";
-import { env } from "../env";
-import { saveImage } from "../utils";
+import { env } from "../env.ts";
+import { saveImage } from "../utils.ts";
 
 const fileManager = new GoogleAIFileManager(env.GEMINI_API_KEY);
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);

@@ -4,7 +4,6 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { env } from "../../src/env";
 import { errorHandler } from "../../src/error-handler";
 import { prisma } from "../../src/lib/prisma";
 import { postUpload } from "../../src/routes/post-upload";
@@ -17,7 +16,7 @@ beforeAll(async () => {
   app.setSerializerCompiler(serializerCompiler);
   app.setErrorHandler(errorHandler);
   app.register(postUpload);
-  await app.listen({ port: env.PORT });
+  await app.listen({ port: 0 });
   await app.ready();
 
   await prisma.measure.deleteMany();
