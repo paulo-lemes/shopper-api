@@ -19,6 +19,6 @@ app.register(postUpload);
 app.register(patchConfirm);
 app.register(getList);
 
-app.listen({ port: env.PORT }).then(() => {
-  console.log("Server running!");
+app.listen({ port: env.PORT, host: "0.0.0.0" }).then(() => {
+  console.log(`Server running on port ${env.PORT}!`);
 });

@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import fs from "fs";
 import sizeOf from "image-size";
 import path from "path";

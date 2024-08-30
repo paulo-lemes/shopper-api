@@ -72,7 +72,7 @@ Para realizar o comando de testes, execute:
 3. Crie um arquivo .env contendo as variáveis de ambiente:
 
   - GEMINI_API_KEY="<chave_api>"
-  - DATABASE_URL="postgresql://<user>:<password>@localhost:5432/<nome_db>"
+  - DATABASE_URL="postgresql://<user>:<password>@db:5432/<nome_db>"
   - POSTGRES_USER="<user>"
   - POSTGRES_PASSWORD="<password>"
   - POSTGRES_DB="<nome_db>"
